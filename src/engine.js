@@ -13,15 +13,19 @@ export class WikiEngine extends EventEmitter {
   constructor() {
     super();
     const saved = this._load();
-    this.state = saved || this._newGame();
+    this.state = saved || this._newGameSync();
     // ensure state is persisted on start
     this._save();
   }
 
   /** Initialize a new game with random start/target */
-  async _newGame() {
-    const startTitle = await getRandom();
-    const targetTitle = await getRandom();
+  // NOTE: For the initial lightweight implementation we avoid async randomness
+  // to keep the constructor simple and avoid a Promise in `this.state`.
+  // The game will still load real data for the start article via the API.
+  // You can replace the placeholders with `await getRandom()` calls in a future update.
+  _newGameSync() {
+    const startTitle = "Main Page";
+    const targetTitle = "Computer";
     return {
       startTitle,
       targetTitle,
@@ -66,7 +70,7 @@ export class WikiEngine extends EventEmitter {
 
   /** Reset the game */
   async reset() {
-    this.state = await this._newGame();
+    this.state = this._newGameSync();
     this._save();
     this.emit(this.state);
   }
