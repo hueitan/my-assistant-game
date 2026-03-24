@@ -32,22 +32,28 @@ articleContainer.innerHTML = `
 
 /** Render the current article and UI state */
 async function render() {
-  const data = await engine.loadCurrent();
-  document.getElementById('article-title').textContent = data.summary.title;
-  document.getElementById('article-summary').textContent = data.summary.extract;
-  const linksDiv = document.getElementById('links-list');
-  linksDiv.innerHTML = '';
-  data.links.forEach(l => {
-    const btn = document.createElement('button');
-    btn.className = 'mw-ui-button mw-ui-button-quiet';
-    btn.textContent = l.title;
-    btn.addEventListener('click', () => engine.selectLink(l.title));
-    linksDiv.appendChild(btn);
-  });
-  document.getElementById('score-display').textContent = `Score: ${engine.state.score}`;
-  // win detection (alert once)
-  if (engine.state.path[engine.state.path.length - 1] === engine.state.targetTitle) {
-    alert(`You reached the target article! Final score: ${engine.state.score}`);
+  try {
+    const data = await engine.loadCurrent();
+    document.getElementById('article-title').textContent = data.summary.title;
+    document.getElementById('article-summary').textContent = data.summary.extract;
+    const linksDiv = document.getElementById('links-list');
+    linksDiv.innerHTML = '';
+    (data.links || []).forEach(l => {
+      const btn = document.createElement('button');
+      btn.className = 'mw-ui-button mw-ui-button-quiet';
+      btn.textContent = l.title;
+      btn.addEventListener('click', () => engine.selectLink(l.title));
+      linksDiv.appendChild(btn);
+    });
+    document.getElementById('score-display').textContent = `Score: ${engine.state.score}`;
+    // win detection (alert once)
+    if (engine.state.path[engine.state.path.length - 1] === engine.state.targetTitle) {
+      alert(`You reached the target article! Final score: ${engine.state.score}`);
+    }
+  } catch (e) {
+    console.error('Failed to load article data:', e);
+    const container = document.getElementById('article-container');
+    container.innerHTML = `<p style="color:red;">Error loading article. Please try again later.</p>`;
   }
 }
 
