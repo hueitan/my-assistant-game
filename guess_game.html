@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Number Guessing Game</title>
+<style>
+  body {font-family: Arial, sans-serif; max-width: 600px; margin: 2rem auto; padding: 1rem; background:#f9f9f9;}
+  h1 {text-align:center;}
+  .log {border:1px solid #ccc; padding:0.5rem; min-height:150px; background:#fff; overflow:auto; margin-top:1rem;}
+  input[type="number"]{width:80px;}
+  button{margin-left:0.5rem;}
+</style>
+</head>
+<body>
+<h1>Number Guessing Game</h1>
+<p>I'm thinking of a number between 1 and 100. Try to guess it!</p>
+<div>
+  <input id="guess" type="number" min="1" max="100" placeholder="1‑100" />
+  <button id="go">Guess</button>
+  <button id="reset">Reset</button>
+</div>
+<div class="log" id="log"></div>
+<script>
+  const logEl = document.getElementById('log');
+  const guessInput = document.getElementById('guess');
+  const goBtn = document.getElementById('go');
+  const resetBtn = document.getElementById('reset');
+  let target, attempts;
+  function init(){
+    target = Math.floor(Math.random()*100)+1;
+    attempts = 0;
+    logEl.textContent = '';
+    guessInput.value='';
+    guessInput.focus();
+    writeLog('New game started. Pick a number!');
+  }
+  function writeLog(msg){
+    const p=document.createElement('p');
+    p.textContent=msg;
+    logEl.appendChild(p);
+    logEl.scrollTop=logEl.scrollHeight;
+  }
+  goBtn.addEventListener('click',()=>{
+    const val = Number(guessInput.value);
+    if(!Number.isInteger(val) || val<1 || val>100){
+      writeLog('⚠️ Enter an integer between 1 and 100.');
+      return;
+    }
+    attempts++;
+    if(val===target){
+      writeLog(`🎉 Correct! You guessed it in ${attempts} ${attempts===1?'try':'tries'}.`);
+    } else if(val<target){
+      writeLog('🔼 Higher');
+    } else {
+      writeLog('🔽 Lower');
+    }
+    guessInput.value='';
+    guessInput.focus();
+  });
+  resetBtn.addEventListener('click',init);
+  init();
+</script>
+</body>
+</html>
