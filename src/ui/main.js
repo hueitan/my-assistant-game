@@ -1,7 +1,6 @@
 import { WikiEngine } from "../engine.js";
 import { initAddLinkButton } from "./addLinkModal.js";
-import "../designer.css"; // existing designer styles
-import "./uiExtras.css"; // additional UI styles
+// CSS is loaded via <link> tags in index.html; no need to import here
 
 export const engine = new WikiEngine();
 
