@@ -1,41 +1,23 @@
 import { WikiEngine } from "../engine.js";
-import { initAddLinkButton } from "./addLinkModal.js";
-// CSS is loaded via <link> tags in index.html; no need to import here
+import "./styles.css";
 
+// Instantiate the global engine
 export const engine = new WikiEngine();
 
-// Ensure audio settings object exists
-engine.audio = engine.audio || { enabled: true };
-
-// Header construction (Codex styles)
+/* ---------- Header ---------- */
 let header = document.querySelector('header');
 if (!header) {
   header = document.createElement('header');
   document.body.prepend(header);
 }
 header.innerHTML = `
-  <button id="addlink-button" class="mw-ui-button mw-ui-button-primary">Add Link</button>
-  <button id="tutorial-button" class="mw-ui-button">Tutorial</button>
-  <button id="audio-toggle-button" class="mw-ui-button">Audio</button>
-  <div id="score-display" style="margin-left:1rem; font-weight:bold;">Score: 0</div>
+  <button id="reset-btn" class="mw-ui-button mw-ui-button-primary">Reset</button>
+  <span id="score-display" style="margin-left:1rem; font-weight:bold;">Score: 0</span>
 `;
 
-// Initialize UI components
-import "./audioToggle.js"; // creates audio toggle in header
-import "./leaderboardPanel.js";
-import "./searchAssistPanel.js";
-import "./templateQuest.js"; // upgraded UI
+document.getElementById('reset-btn').addEventListener('click', () => engine.reset());
 
-// Add‑Link button
-const addLinkBtn = document.getElementById('addlink-button');
-initAddLinkButton(addLinkBtn);
-
-// Tutorial button
-import { startTutorial } from "./tutorial.js";
-const tutorialBtn = document.getElementById('tutorial-button');
-tutorialBtn.addEventListener('click', startTutorial);
-
-// Article view area
+/* ---------- Article view ---------- */
 let articleContainer = document.getElementById('article-container');
 if (!articleContainer) {
   articleContainer = document.createElement('section');
@@ -48,8 +30,8 @@ articleContainer.innerHTML = `
   <div id="links-list"></div>
 `;
 
-// Render current article & UI
-async function renderCurrent() {
+/** Render the current article and UI state */
+async function render() {
   const data = await engine.loadCurrent();
   document.getElementById('article-title').textContent = data.summary.title;
   document.getElementById('article-summary').textContent = data.summary.extract;
@@ -63,10 +45,11 @@ async function renderCurrent() {
     linksDiv.appendChild(btn);
   });
   document.getElementById('score-display').textContent = `Score: ${engine.state.score}`;
+  // win detection (alert once)
+  if (engine.state.path[engine.state.path.length - 1] === engine.state.targetTitle) {
+    alert(`You reached the target article! Final score: ${engine.state.score}`);
+  }
 }
 
-engine.on(renderCurrent);
-renderCurrent();
-
-// Load graph panel (already registers itself on engine events)
-import "./graphPanel.js";
+engine.on(render);
+render();

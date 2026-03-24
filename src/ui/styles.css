@@ -1,0 +1,5 @@
+/* Minimal layout for Wiki Sprint Champion */
+body {font-family: Arial, sans-serif; max-width: 800px; margin: 1rem auto; padding: 0 1rem; background:#f9f9f9;}
+header {margin-bottom: 1rem; display:flex; align-items:center;}
+#article-container {margin-top:1rem;}
+#links-list {margin-top:0.5rem; display:flex; flex-wrap:wrap; gap:0.5rem;}
