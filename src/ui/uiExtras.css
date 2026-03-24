@@ -1,0 +1,33 @@
+/* Additional UI styles for the game */
+
+/* Progress bar (Codex style) */
+.mw-ui-progress {
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  height: 12px;
+  margin-top: 0.5rem;
+}
+.mw-ui-progress .mw-ui-progress-bar {
+  background: var(--accent, #0066cc);
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Simple confetti animation */
+@keyframes confetti-fall {
+  0% { transform: translateY(0) rotate(0deg); opacity:1; }
+  100% { transform: translateY(200px) rotate(360deg); opacity:0; }
+}
+.confetti {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #ff0;
+  animation: confetti-fall 1s forwards;
+}
+
+/* Audio toggle styling (checkbox) */
+#audio-toggle {
+  margin-right: 4px;
+}

@@ -1,0 +1,48 @@
+/* Designer CSS – Codex‑style badge definitions and basic layout */
+
+:root {
+  --badge-category: #2a7ae2;
+  --badge-reference: #0c7c59;
+  --badge-repair: #d33c3c;
+  --badge-link: #9855d4;
+  --badge-template: #e68a00;
+}
+
+/* Badge base */
+.badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #fff;
+  margin-right: 4px;
+}
+.badge.category { background: var(--badge-category); }
+.badge.reference { background: var(--badge-reference); }
+.badge.repair { background: var(--badge-repair); }
+.badge.link { background: var(--badge-link); }
+.badge.template { background: var(--badge-template); }
+
+/* Modal overlay */
+.modal {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal-content {
+  background: var(--background, #fff);
+  padding: 1rem;
+  border-radius: 6px;
+  width: 90%;
+  max-width: 400px;
+}
+
+/* Simple accordion */
+.accordion { border:1px solid #ccc; border-radius:4px; margin-top:0.5rem; }
+.accordion-header { padding:0.5rem; cursor:pointer; background:#f5f5f5; }
+.accordion-body { display:none; padding:0.5rem; }
+.accordion.open .accordion-body { display:block; }

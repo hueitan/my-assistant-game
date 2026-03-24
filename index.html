@@ -2,31 +2,26 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Number Guessing Game (MediaWiki API style)</title>
-<style>
-  :root { --bg:#f9f9f9; --text:#000; --accent:#0066cc; }
-  body.dark { --bg:#222; --text:#fff; --accent:#66aaff; }
-  body {font-family:Arial,sans-serif; max-width:600px; margin:2rem auto; padding:1rem; background:var(--bg); color:var(--text);}
-  h1 {text-align:center;}
-  .log {border:1px solid #ccc; padding:.5rem; min-height:150px; background:#fff; overflow:auto; margin-top:1rem;}
-  input[type="number"]{width:80px;}
-  button{margin-left:.5rem; cursor:pointer;}
-  #dark-toggle{position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.2rem; color:var(--accent);}
-  @media (max-width:480px){body{margin:0.5rem;}}
-</style>
+<title>Wiki Sprint Champion</title>
+<link rel="stylesheet" href="https://www.mediawiki.org/w/resources/src/mediawiki.codex/styles.codex.css">
+<link rel="stylesheet" href="src/designer.css">
+<link rel="stylesheet" href="src/ui/uiExtras.css">
 </head>
 <body>
-<button id="dark-toggle">🌙</button>
-<h1>Number Guessing Game</h1>
-<div id="extract">Loading…</div>
-<div>
-  <input id="guess" type="number" min="1" max="100" placeholder="1‑100" />
-  <button id="go">Guess</button>
-  <button id="reset">Reset</button>
-  <button id="hint">Hint</button>
-</div>
-<div class="log" id="log"></div>
-<p id="score">Score: 0</p>
-<script type="module" src="src/ui.js"></script>
+<header></header>
+
+<!-- Leaderboard panel placeholder -->
+<div id="leaderboard-panel"></div>
+
+<!-- Search Assist sidebar placeholder -->
+<div id="search-assist" style="position:fixed; right:0; top:100px; width:300px;"></div>
+
+<!-- Main article area -->
+<section id="article-container"></section>
+
+<!-- Template Quest panel placeholder -->
+<div id="template-quest" style="margin-top:1rem;"></div>
+
+<script type="module" src="src/ui/main.js"></script>
 </body>
 </html>
